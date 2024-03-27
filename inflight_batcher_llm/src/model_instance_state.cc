@@ -245,7 +245,10 @@ ModelInstanceState::ModelInstanceState(ModelState* model_state, TRITONBACKEND_Mo
         TLLM_LOG_WARNING("enable_kv_cache_reuse is not specified, will be set to false");
     }
 
-    auto const gpuDeviceIds = model_state_->GetDeviceIds();
+    int32_t device_id;
+    std::vector<int32_t> gpuDeviceIds;
+    RETURN_IF_ERROR(TRITONBACKEND_ModelInstanceDeviceId(triton_model_instance, &device_id));
+    gpuDeviceIds.push_back(device_id)
 
     TrtGptModelOptionalParams optionalParams;
     optionalParams.kvCacheConfig.maxTokens = maxTokensInPagedKvCache;
