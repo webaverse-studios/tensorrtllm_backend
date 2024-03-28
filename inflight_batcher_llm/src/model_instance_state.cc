@@ -245,8 +245,8 @@ ModelInstanceState::ModelInstanceState(ModelState* model_state, TRITONBACKEND_Mo
 
     int32_t device_id;
     std::vector<int32_t> gpuDeviceIds;
-    RETURN_IF_ERROR(TRITONBACKEND_ModelInstanceDeviceId(triton_model_instance, &device_id));
-    gpuDeviceIds.push_back(device_id)
+    TRITONBACKEND_ModelInstanceDeviceId(triton_model_instance, &device_id);
+    gpuDeviceIds.push_back(device_id);
 
     TrtGptModelOptionalParams optionalParams;
     optionalParams.kvCacheConfig.maxTokens = maxTokensInPagedKvCache;
